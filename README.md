@@ -4,6 +4,6 @@
 ### Jhoan Sebastian Carballo
 ### Juan Esteban Martinez 
 # Grupo
-### (Martes-Jueves | 8:00pm-10:00pm)
+### (Lunes-Miercoles | 8:00pm-10:00pm)
 # Tecnologías
 Java, SpringBoot, MySQL, Apache NetBeans
