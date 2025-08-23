@@ -6,7 +6,7 @@ package app.domain.model;
 public class EmergencyContact {
     private String Name;
     private String Relation;
-    private double PhoneNum;
+    private String PhoneNum;
 
     public String getName() {
         return Name;
@@ -24,12 +24,15 @@ public class EmergencyContact {
         this.Relation = Relation;
     }
 
-    public double getPhoneNum() {
+    public String getPhoneNum() {
         return PhoneNum;
     }
 
-    public void setPhoneNum(double PhoneNum) {
-        this.PhoneNum = PhoneNum;
+    public void setPhoneNumber(String phoneNumber) {
+        if (phoneNumber != null && !phoneNumber.matches("\\d{10}")) {
+            throw new IllegalArgumentException("Teléfono debe tener 10 dígitos");
+        }
+        this.PhoneNum = phoneNumber;
     }
     
 }

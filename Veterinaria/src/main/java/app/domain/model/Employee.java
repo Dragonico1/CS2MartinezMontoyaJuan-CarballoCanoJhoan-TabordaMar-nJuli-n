@@ -21,16 +21,22 @@ public class Employee extends Person{
         return Username;
     }
 
-    public void setUsername(String Username) {
-        this.Username = Username;
+    public void setUsername(String username) {
+        if (username != null && (username.length() > 15 || !username.matches("[a-zA-Z0-9]+"))) {
+            throw new IllegalArgumentException("Username máximo 15 caracteres, solo letras y números");
+        }
+        this.Username = username;
     }
 
     public String getPassword() {
         return Password;
     }
 
-    public void setPassword(String Password) {
-        this.Password = Password;
+    public void setPassword(String password) {
+        if (password != null && password.length() < 8) {
+            throw new IllegalArgumentException("Contraseña mínimo 8 caracteres");
+        }
+        this.Password = password;
     } 
     
 }

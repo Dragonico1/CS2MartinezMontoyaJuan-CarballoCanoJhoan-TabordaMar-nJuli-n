@@ -2,6 +2,7 @@ package app.domain.model;
 
 import java.time.LocalDate;
 import app.domain.model.Emuns.Gender;
+import java.time.Period;
 
 /**
  *
@@ -17,8 +18,15 @@ public class Patient extends Person{
         return Birthdate;
     }
 
-    public void setBirthdate(LocalDate Birthdate) {
-        this.Birthdate = Birthdate;
+    public void setBirthDate(LocalDate birthDate) {
+        // Validación básica: máximo 150 años
+        if (birthDate != null) {
+            int edad = Period.between(birthDate, LocalDate.now()).getYears();
+            if (edad > 150) {
+                throw new IllegalArgumentException("Edad máximo 150 años");
+            }
+        }
+        this.Birthdate = birthDate;
     }
 
     public Gender getGender() {

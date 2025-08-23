@@ -5,7 +5,7 @@ package app.domain.model;
  */
 public abstract class Person {
     private String Name;
-    private double ID;
+    private String ID;
     private String Mail;
     private String PhoneNum;
     private String Address;
@@ -18,12 +18,16 @@ public abstract class Person {
         this.Name = Name;
     }
 
-    public double getID() {
+    public String getID() {
         return ID;
     }
 
-    public void setID(double ID) {
-        this.ID = ID;
+    public void setId(String personId) {
+        // Validación básica: máximo 10 dígitos
+        if (personId != null && personId.length() > 10) {
+            throw new IllegalArgumentException("Cédula médico máximo 10 dígitos");
+        }
+        this.ID = personId;
     }
 
     public String getMail() {
@@ -54,8 +58,11 @@ public abstract class Person {
         return Address;
     }
 
-    public void setAddress(String Address) {
-        this.Address = Address;
+    public void setAddress(String address) {
+        if (address != null && address.length() > 30) {
+            throw new IllegalArgumentException("Dirección máximo 30 caracteres");
+        }
+        this.Address = address;
     }
     
 }

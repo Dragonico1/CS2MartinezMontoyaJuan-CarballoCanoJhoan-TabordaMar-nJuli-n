@@ -17,7 +17,10 @@ public abstract class Order {
         return orderNumber;
     }
 
-    public void setOrderNumber(String orderNumber) {
+     public void setOrderNumber(String orderNumber) {
+        if (orderNumber != null && orderNumber.length() > 6) {
+            throw new IllegalArgumentException("Orden máximo 6 dígitos");
+        }
         this.orderNumber = orderNumber;
     }
 
