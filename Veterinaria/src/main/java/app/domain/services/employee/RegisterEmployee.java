@@ -16,7 +16,7 @@ public class RegisterEmployee {
 
     public void register(Employee employee) throws Exception {
         if (employee == null) throw new Exception("El empleado no puede ser nulo");
-        if (employee.getID() == 0) throw new Exception("El empleado debe tener un ID válido");
+        if (employee.getID().equalsIgnoreCase("0")) throw new Exception("El empleado debe tener un ID válido");
         if (employee.getUsername() == null || employee.getUsername().isBlank())
             throw new Exception("El empleado debe tener un username válido");
 
