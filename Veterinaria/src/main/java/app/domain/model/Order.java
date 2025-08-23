@@ -6,8 +6,8 @@ import java.time.LocalDate;
  *
  * @author Dragonico
  */
-public class Order {
-    private String orderNumber;
+public abstract class Order {
+    private String orderNumber;  
     private String patientId;
     private String doctorId;
     private LocalDate creationDate;
