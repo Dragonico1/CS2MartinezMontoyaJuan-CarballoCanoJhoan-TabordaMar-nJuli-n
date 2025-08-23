@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>CS2Veterinaria</groupId>
-	<artifactId>Veterinaria</artifactId>
+	<artifactId>Clinic</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Veterinaria</name>
+	<name>Clinic</name>
 	<description>Sistema de gestión para clínica veterinaria</description>
 	<url/>
 	<licenses>
