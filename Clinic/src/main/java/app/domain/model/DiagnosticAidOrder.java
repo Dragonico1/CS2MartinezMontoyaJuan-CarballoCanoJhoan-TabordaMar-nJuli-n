@@ -1,10 +1,10 @@
 package app.domain.model;
 
 /**
- *
+ * 
  * @author Dragonico
  */
-public class DiagnosticAidOrder {
+public class DiagnosticAidOrder extends Order {
     private String ExamId;
     private String ExamName;
     private int Quantity;
@@ -59,5 +59,4 @@ public class DiagnosticAidOrder {
     public void setSpecialistType(String SpecialistType) {
         this.SpecialistType = SpecialistType;
     }
-    
 }
