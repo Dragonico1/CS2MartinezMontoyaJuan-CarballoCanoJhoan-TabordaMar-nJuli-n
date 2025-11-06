@@ -1,9 +1,12 @@
 package app.adapter.in.validators;
 
+import org.springframework.stereotype.Component;
+
 /**
  *
  * @author Dragonico
  */
+@Component
 public class ProcedureOrderValidator extends OrderValidator {
     
     public String procedureIdValidator(String value) throws Exception {

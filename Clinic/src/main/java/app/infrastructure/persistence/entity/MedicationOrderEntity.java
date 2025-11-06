@@ -1,15 +1,15 @@
-package app.infrastructure.persistence.entities;
+package app.infrastructure.persistence.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
 /**
- * Entity for DiagnosticAidOrder table in database
+ * Entity for MedicationOrder table in database
  * @author Dragonico
  */
 @Entity
-@Table(name = "diagnostic_aid_orders")
-public class DiagnosticAidOrderEntity {
+@Table(name = "medication_orders")
+public class MedicationOrderEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,25 +31,22 @@ public class DiagnosticAidOrderEntity {
     @Column(name = "creation_date", nullable = false)
     private LocalDate creationDate;
     
-    @Column(name = "exam_id", nullable = false)
-    private String examId;
+    @Column(name = "medicine_id", nullable = false)
+    private String medicineId;
     
-    @Column(name = "exam_name", nullable = false)
-    private String examName;
+    @Column(name = "medicine_name", nullable = false)
+    private String medicineName;
     
-    @Column(name = "quantity", nullable = false)
-    private int quantity;
+    @Column(name = "dose", nullable = false)
+    private String dose;
+    
+    @Column(name = "treatment_duration", nullable = false)
+    private String treatmentDuration;
     
     @Column(name = "cost", nullable = false)
     private double cost;
-    
-    @Column(name = "requires_specialist", nullable = false)
-    private boolean requiresSpecialist;
-    
-    @Column(name = "specialist_type")
-    private String specialistType;
 
-    public DiagnosticAidOrderEntity() {
+    public MedicationOrderEntity() {
     }
 
     public Long getId() {
@@ -100,28 +97,36 @@ public class DiagnosticAidOrderEntity {
         this.creationDate = creationDate;
     }
 
-    public String getExamId() {
-        return examId;
+    public String getMedicineId() {
+        return medicineId;
     }
 
-    public void setExamId(String examId) {
-        this.examId = examId;
+    public void setMedicineId(String medicineId) {
+        this.medicineId = medicineId;
     }
 
-    public String getExamName() {
-        return examName;
+    public String getMedicineName() {
+        return medicineName;
     }
 
-    public void setExamName(String examName) {
-        this.examName = examName;
+    public void setMedicineName(String medicineName) {
+        this.medicineName = medicineName;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public String getDose() {
+        return dose;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setDose(String dose) {
+        this.dose = dose;
+    }
+
+    public String getTreatmentDuration() {
+        return treatmentDuration;
+    }
+
+    public void setTreatmentDuration(String treatmentDuration) {
+        this.treatmentDuration = treatmentDuration;
     }
 
     public double getCost() {
@@ -130,21 +135,5 @@ public class DiagnosticAidOrderEntity {
 
     public void setCost(double cost) {
         this.cost = cost;
-    }
-
-    public boolean isRequiresSpecialist() {
-        return requiresSpecialist;
-    }
-
-    public void setRequiresSpecialist(boolean requiresSpecialist) {
-        this.requiresSpecialist = requiresSpecialist;
-    }
-
-    public String getSpecialistType() {
-        return specialistType;
-    }
-
-    public void setSpecialistType(String specialistType) {
-        this.specialistType = specialistType;
     }
 }

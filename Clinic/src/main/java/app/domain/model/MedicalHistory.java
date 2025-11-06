@@ -9,9 +9,10 @@ import java.time.LocalDate;
 public class MedicalHistory {
     private LocalDate Date;
     private Employee Doctor;
+    private Patient patient;
     private String ReasonVisit;
     private String Symptoms;
-    private Diagnosis diagnosis;
+    private String diagnosis;
 
     public LocalDate getDate() {
         return Date;
@@ -27,6 +28,17 @@ public class MedicalHistory {
 
     public void setDoctor(Employee Doctor) {
         this.Doctor = Doctor;
+    }
+    
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        if (patient == null) {
+            throw new IllegalArgumentException("La historia clínica debe pertenecer a un paciente.");
+        }
+        this.patient = patient;
     }
 
     public String getReasonVisit() {
@@ -45,11 +57,11 @@ public class MedicalHistory {
         this.Symptoms = Symptoms;
     }
 
-    public Diagnosis getDiagnosis() {
+    public String getDiagnosis() {
         return diagnosis;
     }
 
-    public void setDiagnosis(Diagnosis diagnosis) {
+    public void setDiagnosis(String diagnosis) {
         this.diagnosis = diagnosis;
     }
     

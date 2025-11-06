@@ -8,7 +8,7 @@ import java.time.LocalDate;
  */
 public class MedicalPolicy {
     private String InsureName;
-    private double PolicyNumber;
+    private String PolicyNumber;
     private boolean State;
     private LocalDate PolicyDuration;
 
@@ -20,11 +20,11 @@ public class MedicalPolicy {
         this.InsureName = InsureName;
     }
 
-    public double getPolicyNumber() {
+    public String getPolicyNumber() {
         return PolicyNumber;
     }
 
-    public void setPolicyNumber(double PolicyNumber) {
+    public void setPolicyNumber(String PolicyNumber) {
         this.PolicyNumber = PolicyNumber;
     }
 

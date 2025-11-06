@@ -3,11 +3,14 @@ package app.adapter.in.validators;
 import java.time.LocalDate;
 import java.time.Period;
 import app.domain.model.Emuns.Gender;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Dragonico
  */
+
+@Component
 public class PatientValidator extends PersonValidator {
     
     public LocalDate birthdateValidator(LocalDate birthdate) throws Exception {

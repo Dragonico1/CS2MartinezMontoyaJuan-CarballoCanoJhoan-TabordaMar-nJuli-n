@@ -5,7 +5,7 @@ package app.domain.model.Emuns;
  * @author Dragonico
  */
 public enum AppointmentStatus {
-    PENDIENTE,
-    COMPLETADA,
-    CANCELADA
+    PENDING,
+    COMPLETED,
+    CANCELED
 }

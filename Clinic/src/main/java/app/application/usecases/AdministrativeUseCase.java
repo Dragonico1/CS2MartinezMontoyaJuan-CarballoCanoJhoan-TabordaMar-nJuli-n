@@ -4,6 +4,7 @@ import app.domain.model.*;
 import app.domain.model.Emuns.Role;
 import app.domain.ports.*;
 import app.adapter.in.validators.AppointmentValidator;
+import org.springframework.stereotype.Service;
 
 /**
  * Main use case class for the Administrative Staff (AdminStaff) role.
@@ -11,6 +12,8 @@ import app.adapter.in.validators.AppointmentValidator;
  * 
  * @author Dragonico
  */
+
+@Service
 public class AdministrativeUseCase {
 
     // --------------------- CONSTANT MESSAGES (in Spanish for user feedback) ---------------------
@@ -51,7 +54,7 @@ public class AdministrativeUseCase {
      * @throws Exception if the employee is null or does not have the AdminStaff role.
      */
     private void validateAdministrativeRole(Employee employee) throws Exception {
-        if (employee == null || employee.getRole() != Role.AdminStaff) {
+        if (employee == null || employee.getRole() != Role.ADMIN_STAFF) {
             throw new Exception(ERROR_UNAUTHORIZED);
         }
     }

@@ -1,9 +1,12 @@
 package app.adapter.in.validators;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Dragonico
  */
+
+@Component
 public class DiagnosticAidOrderValidator extends OrderValidator {
     
     public String examIdValidator(String value) throws Exception {

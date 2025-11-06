@@ -3,11 +3,13 @@ package app.adapter.in.validators;
 import app.domain.model.Appointment;
 import app.domain.model.Emuns.AppointmentStatus;
 import java.time.LocalDateTime;
+import org.springframework.stereotype.Component;
 
 /**
  * Validador para los campos del modelo Appointment.
  * @author Dragonico
  */
+@Component
 public class AppointmentValidator extends SimpleValidator {
 
     public String appointmentIdValidator(String value) throws Exception {

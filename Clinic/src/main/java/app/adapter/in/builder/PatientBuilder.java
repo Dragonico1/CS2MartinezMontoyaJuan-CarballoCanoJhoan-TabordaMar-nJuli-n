@@ -40,7 +40,7 @@ public class PatientBuilder {
         // Construir póliza médica
         MedicalPolicy policy = new MedicalPolicy();
         policy.setInsureName(request.getInsureName());
-        policy.setPolicyNumber(Double.parseDouble(request.getPolicyNumber()));
+        policy.setPolicyNumber(request.getPolicyNumber());
         policy.setState(request.isPolicyState());
         policy.setPolicyDuration(request.getPolicyDuration());
         patient.setPolicy(policy);

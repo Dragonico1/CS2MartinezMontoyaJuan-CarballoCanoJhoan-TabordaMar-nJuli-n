@@ -6,6 +6,7 @@ import app.domain.services.employee.*;
 import app.domain.ports.EmployeePort;
 import app.adapter.in.validators.EmployeeValidator;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 /**
  * Main use case class for the Human Resources (HR) role.
@@ -14,6 +15,8 @@ import java.util.List;
  * 
  * @author Dragonico
  */
+
+@Service
 public class HumanResourcesUseCase {
 
     // --------------------- CONSTANT MESSAGES (in Spanish for user feedback) ---------------------
@@ -110,6 +113,7 @@ public class HumanResourcesUseCase {
      * @param hrId The ID of the user attempting the action.
      * @throws Exception if the user is not authorized.
      */
+    
     private void validateHumanResourcesRole(String hrId) throws Exception {
         SearchEmployeeById finder = new SearchEmployeeById(employeePort);
         Employee employee = finder.search(hrId);
@@ -118,7 +122,7 @@ public class HumanResourcesUseCase {
             throw new Exception(ERROR_EMPLOYEE_NOT_FOUND + hrId);
         }
 
-        if (employee.getRole() != Role.HumanResourses) {
+        if (employee.getRole() != Role.HUMAN_RESOURCES) {
             throw new Exception(ERROR_UNAUTHORIZED_ROLE);
         }
     }

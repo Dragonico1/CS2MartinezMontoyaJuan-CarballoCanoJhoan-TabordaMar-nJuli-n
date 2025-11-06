@@ -1,11 +1,13 @@
 package app.adapter.in.validators;
-
 import app.domain.model.Emuns.Role;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Dragonico
  */
+
+@Component
 public class EmployeeValidator extends PersonValidator {
     
     public String usernameValidator(String username) throws Exception {

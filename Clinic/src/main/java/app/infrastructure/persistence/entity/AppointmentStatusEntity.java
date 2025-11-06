@@ -1,4 +1,4 @@
-package app.infrastructure.persistence.entities;
+package app.infrastructure.persistence.entity;
 
 /**
  * Enum for AppointmentStatus in database entity

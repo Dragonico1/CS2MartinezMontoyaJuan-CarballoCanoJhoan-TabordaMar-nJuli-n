@@ -62,18 +62,18 @@ public class AppointmentBuilder {
         // and also map common English names for convenience.
         String rawStatus = request.getStatus();
         if (rawStatus == null || rawStatus.isBlank()) {
-            appointment.setStatus(AppointmentStatus.PENDIENTE);
+            appointment.setStatus(AppointmentStatus.PENDING);
         } else {
             String s = rawStatus.trim().toUpperCase();
-            if ("SCHEDULED".equals(s)) s = "PENDIENTE";
-            else if ("COMPLETED".equals(s)) s = "COMPLETADA";
-            else if ("CANCELLED".equals(s) || "CANCELED".equals(s)) s = "CANCELADA";
+            if ("SCHEDULED".equals(s)) s = "PENDING";
+            else if ("COMPLETED".equals(s)) s = "COMPLETED";
+            else if ("CANCELLED".equals(s) || "CANCELED".equals(s)) s = "CANCELED";
 
             try {
                 AppointmentStatus status = AppointmentStatus.valueOf(s);
                 appointment.setStatus(status);
             } catch (IllegalArgumentException ex) {
-                throw new Exception("Estado de cita inválido. Valores válidos: PENDIENTE, COMPLETADA, CANCELADA");
+                throw new Exception("Estado de cita inválido. Valores válidos: PENDING, COMPLETED, CANCELED");
             }
         }
 

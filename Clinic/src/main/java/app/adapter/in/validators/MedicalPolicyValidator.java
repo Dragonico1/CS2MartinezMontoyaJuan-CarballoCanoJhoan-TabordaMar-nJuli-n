@@ -1,11 +1,13 @@
 package app.adapter.in.validators;
 
 import java.time.LocalDate;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Dragonico
  */
+@Component
 public class MedicalPolicyValidator extends SimpleValidator {
     
     public String insureNameValidator(String value) throws Exception {

@@ -5,6 +5,7 @@ import app.domain.model.Emuns.Role;
 import app.domain.ports.*;
 import app.domain.services.medicalhistory.*;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 /**
  * Main use case class for the Doctor role.
@@ -13,6 +14,8 @@ import java.util.List;
  * 
  * @author Dragonico
  */
+
+@Service
 public class DoctorUseCase {
 
     // --------------------- CONSTANT MESSAGES (in Spanish for user feedback) ---------------------
@@ -54,7 +57,7 @@ public class DoctorUseCase {
         if (doctor == null) {
             throw new Exception(ERROR_EMPLOYEE_NOT_FOUND + doctorId);
         }
-        if (doctor.getRole() != Role.Doctor) {
+        if (doctor.getRole() != Role.DOCTOR) {
             throw new Exception(ERROR_INVALID_ROLE);
         }
     }

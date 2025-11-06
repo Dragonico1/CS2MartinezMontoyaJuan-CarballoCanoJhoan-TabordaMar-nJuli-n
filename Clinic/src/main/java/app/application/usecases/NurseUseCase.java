@@ -5,6 +5,7 @@ import app.domain.model.Emuns.Role;
 import app.domain.ports.*;
 import app.domain.services.medicalhistory.RegisterMedicalHistory;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 /**
  * Main use case class for the Nurse role.
@@ -13,6 +14,8 @@ import java.util.List;
  * 
  * @author Dragonico
  */
+
+@Service
 public class NurseUseCase {
 
     // --------------------- CONSTANT MESSAGES (in Spanish for user feedback) ---------------------
@@ -51,7 +54,7 @@ public class NurseUseCase {
         if (nurse == null) {
             throw new Exception(ERROR_EMPLOYEE_NOT_FOUND + nurseId);
         }
-        if (nurse.getRole() != Role.Nurse) {
+        if (nurse.getRole() != Role.NURSE) {
             throw new Exception(ERROR_INVALID_ROLE);
         }
     }

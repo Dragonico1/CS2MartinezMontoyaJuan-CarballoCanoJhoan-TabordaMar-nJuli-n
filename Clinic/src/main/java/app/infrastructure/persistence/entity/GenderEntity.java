@@ -1,4 +1,4 @@
-package app.infrastructure.persistence.entities;
+package app.infrastructure.persistence.entity;
 
 /**
  * Enum for Gender in database entity
@@ -6,6 +6,5 @@ package app.infrastructure.persistence.entities;
  */
 public enum GenderEntity {
     MALE,
-    FEMALE,
-    OTHER
+    FEMALE
 }

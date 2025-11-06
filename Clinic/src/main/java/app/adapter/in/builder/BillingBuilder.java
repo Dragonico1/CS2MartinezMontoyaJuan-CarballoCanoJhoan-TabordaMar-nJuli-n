@@ -46,7 +46,7 @@ public class BillingBuilder {
         // Asignar póliza médica
         MedicalPolicy policy = new MedicalPolicy();
         try {
-            double policyNumber = Double.parseDouble(request.getPolicyNumber());
+            String policyNumber = request.getPolicyNumber();
             policy.setPolicyNumber(policyNumber);
         } catch (NumberFormatException e) {
             throw new Exception("El número de póliza debe ser un valor numérico.");
