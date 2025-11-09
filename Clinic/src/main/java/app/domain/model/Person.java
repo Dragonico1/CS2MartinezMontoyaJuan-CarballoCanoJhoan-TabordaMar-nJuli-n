@@ -1,10 +1,14 @@
 package app.domain.model;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  *
  * @author Dragonico
  */
 public abstract class Person {
     private String Name;
+    @JsonProperty("employeeId")
     private String ID;
     private String Mail;
     private String PhoneNum;
@@ -17,7 +21,8 @@ public abstract class Person {
     public void setName(String Name) {
         this.Name = Name;
     }
-
+    
+    
     public String getID() {
         return ID;
     }

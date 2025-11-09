@@ -14,73 +14,58 @@ public class DataInitializer {
     @Bean
     CommandLineRunner initEmployees(EmployeeRepository repository, PasswordEncoder encoder) {
         return args -> {
+            // repository.deleteAll();
 
             createIfNotExists(repository, encoder,
-                    "hr01",
-                    "Empleado RRHH",
-                    "rrhh@clinic.com",
-                    "3000000001",
-                    "Oficina RRHH",
-                    RoleEntity.HUMAN_RESOURCES,
-                    "rrhh123");
+                    "hr01", "Recursos Humanos",
+                    "rh@clinic.com", "3001111111", "Oficina RH",
+                    RoleEntity.HUMAN_RESOURCES, "rh", "rh123");
 
             createIfNotExists(repository, encoder,
-                    "admin01",
-                    "Empleado Administrativo",
-                    "admin@clinic.com",
-                    "3000000002",
-                    "Oficina Administrativa",
-                    RoleEntity.ADMIN_STAFF,
-                    "admin123");
+                    "admin01", "Administrador General",
+                    "admin@clinic.com", "3000000000", "Oficina Central",
+                    RoleEntity.ADMIN_STAFF, "admin", "admin123");
 
             createIfNotExists(repository, encoder,
-                    "info01",
-                    "Soporte Técnico",
-                    "soporte@clinic.com",
-                    "3000000003",
-                    "Centro de Soporte",
-                    RoleEntity.INFO_SUPPORT,
-                    "info123");
+                    "it01", "Soporte Técnico",
+                    "it@clinic.com", "3002222222", "Sala de Servidores",
+                    RoleEntity.INFO_SUPPORT, "it", "it123");
 
             createIfNotExists(repository, encoder,
-                    "nurse01",
-                    "Enfermero Principal",
-                    "nurse@clinic.com",
-                    "3000000004",
-                    "Área de Hospitalización",
-                    RoleEntity.NURSE,
-                    "nurse123");
+                    "nurse01", "Enfermera Jefe",
+                    "nurse@clinic.com", "3003333333", "Pabellón A",
+                    RoleEntity.NURSE, "nurse", "nurse123");
 
             createIfNotExists(repository, encoder,
-                    "doc01",
-                    "Doctor Veterinario",
-                    "doctor@clinic.com",
-                    "3000000005",
-                    "Consultorio 1",
-                    RoleEntity.DOCTOR,
-                    "doc123");
-
-            System.out.println("✅ Inicialización de empleados completada con todos los roles.");
+                    "doctor01", "Doctor Principal",
+                    "doctor@clinic.com", "3004444444", "Consultorio 1",
+                    RoleEntity.DOCTOR, "doctor", "doctor123");
         };
     }
 
     private void createIfNotExists(EmployeeRepository repository, PasswordEncoder encoder,
-                                   String id, String name, String email, String phone, String address,
-                                   RoleEntity role, String rawPassword) {
-        if (repository.findByUsername(id) == null) {
-            EmployeeEntity e = new EmployeeEntity();
-            e.setEmployeeId(id);
-            e.setName(name);
-            e.setEmail(email);
-            e.setPhoneNumber(phone);
-            e.setAddress(address);
-            e.setRole(role);
-            e.setUsername(id);
-            e.setPassword(encoder.encode(rawPassword));
-            repository.save(e);
-            System.out.println("✅ Usuario creado: " + id + " (" + role + ")");
-        } else {
-            System.out.println("ℹ️ Usuario ya existe: " + id);
+                                   String employeeId, String name, String email,
+                                   String phone, String address, RoleEntity role,
+                                   String username, String rawPassword) {
+        try {
+            if (repository.findByUsername(username) == null) {
+                EmployeeEntity employee = new EmployeeEntity();
+                employee.setEmployeeId(employeeId);
+                employee.setName(name);
+                employee.setEmail(email);
+                employee.setPhoneNumber(phone);
+                employee.setAddress(address);
+                employee.setRole(role);
+                employee.setUsername(username);
+                employee.setPassword(encoder.encode(rawPassword));
+
+                repository.save(employee);
+                System.out.println("✅ Usuario creado: " + username + " (" + role + ")");
+            } else {
+                System.out.println("ℹ️ Usuario ya existe: " + username);
+            }
+        } catch (Exception e) {
+            System.err.println("❌ Error al crear usuario " + username + ": " + e.getMessage());
         }
     }
 }
