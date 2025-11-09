@@ -6,8 +6,8 @@ package app.infrastructure.persistence.entity;
  */
 public enum RoleEntity {
     HUMAN_RESOURCES,
-    ADMINISTRATIVE_STAFF,
-    INFORMATION_SUPPORT,
+    ADMIN_STAFF,
+    INFO_SUPPORT,
     NURSE,
     DOCTOR
 }

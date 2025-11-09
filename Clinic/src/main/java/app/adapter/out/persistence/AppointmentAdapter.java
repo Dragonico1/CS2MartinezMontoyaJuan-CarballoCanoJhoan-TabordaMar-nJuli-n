@@ -17,22 +17,30 @@ public class AppointmentAdapter implements AppointmentPort {
     @Autowired
     private AppointmentRepository appointmentRepository;
 
+    // -------------------- CREAR CITA --------------------
     @Override
     public void scheduleAppointment(Appointment appointment) throws Exception {
+        if (appointment == null) {
+            throw new Exception("La cita no puede ser nula.");
+        }
         AppointmentEntity entity = AppointmentMapper.toEntity(appointment);
         appointmentRepository.save(entity);
     }
 
+    // -------------------- ACTUALIZAR CITA --------------------
     @Override
     public void updateAppointment(String appointmentId, Appointment updatedData) throws Exception {
         AppointmentEntity existing = appointmentRepository.findByAppointmentId(appointmentId);
         if (existing == null) {
             throw new Exception("No se encontró la cita con ID: " + appointmentId);
         }
+
         AppointmentEntity updatedEntity = AppointmentMapper.toEntity(updatedData);
+        updatedEntity.setAppointmentId(existing.getAppointmentId()); // mantener el ID original
         appointmentRepository.save(updatedEntity);
     }
 
+    // -------------------- CANCELAR CITA --------------------
     @Override
     public void cancelAppointment(String appointmentId) throws Exception {
         AppointmentEntity entity = appointmentRepository.findByAppointmentId(appointmentId);
@@ -42,12 +50,26 @@ public class AppointmentAdapter implements AppointmentPort {
         appointmentRepository.delete(entity);
     }
 
+    // -------------------- BUSCAR POR ID --------------------
     @Override
     public Appointment searchAppointmentById(String appointmentId) throws Exception {
         AppointmentEntity entity = appointmentRepository.findByAppointmentId(appointmentId);
+        if (entity == null) {
+            throw new Exception("No se encontró la cita con ID: " + appointmentId);
+        }
         return AppointmentMapper.toDomain(entity);
     }
 
+    // -------------------- LISTAR TODAS --------------------
+    @Override
+    public List<Appointment> listAllAppointments() throws Exception {
+        List<AppointmentEntity> entities = appointmentRepository.findAll();
+        return entities.stream()
+                .map(AppointmentMapper::toDomain)
+                .collect(Collectors.toList());
+    }
+
+    // -------------------- LISTAR POR PACIENTE --------------------
     @Override
     public List<Appointment> listAppointmentsByPatient(String patientId) throws Exception {
         List<AppointmentEntity> entities = appointmentRepository.findByPatientId(patientId);
@@ -55,4 +77,5 @@ public class AppointmentAdapter implements AppointmentPort {
                 .map(AppointmentMapper::toDomain)
                 .collect(Collectors.toList());
     }
+
 }

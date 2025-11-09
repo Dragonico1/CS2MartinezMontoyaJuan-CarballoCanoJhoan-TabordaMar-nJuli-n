@@ -52,8 +52,8 @@ public class EmployeeMapper {
         if (role == null) return null;
         switch (role) {
             case HUMAN_RESOURCES: return RoleEntity.HUMAN_RESOURCES;
-            case ADMIN_STAFF: return RoleEntity.ADMINISTRATIVE_STAFF;
-            case INFO_SUPPORT: return RoleEntity.INFORMATION_SUPPORT;
+            case ADMIN_STAFF: return RoleEntity.ADMIN_STAFF;
+            case INFO_SUPPORT: return RoleEntity.INFO_SUPPORT;
             case NURSE: return RoleEntity.NURSE;
             case DOCTOR: return RoleEntity.DOCTOR;
             default: return null;
@@ -64,8 +64,8 @@ public class EmployeeMapper {
         if (entityRole == null) return null;
         switch (entityRole) {
             case HUMAN_RESOURCES: return Role.HUMAN_RESOURCES;
-            case ADMINISTRATIVE_STAFF: return Role.ADMIN_STAFF;
-            case INFORMATION_SUPPORT: return Role.INFO_SUPPORT;
+            case ADMIN_STAFF: return Role.ADMIN_STAFF;
+            case INFO_SUPPORT: return Role.INFO_SUPPORT;
             case NURSE: return Role.NURSE;
             case DOCTOR: return Role.DOCTOR;
             default: return null;

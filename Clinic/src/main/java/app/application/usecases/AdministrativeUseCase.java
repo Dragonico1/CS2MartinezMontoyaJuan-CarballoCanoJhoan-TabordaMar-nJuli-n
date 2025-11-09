@@ -13,7 +13,6 @@ import java.util.List;
  * 
  * @author Dragonico
  */
-
 @Service
 public class AdministrativeUseCase {
 
@@ -26,6 +25,7 @@ public class AdministrativeUseCase {
     private static final String ERROR_EMPTY_APPOINTMENT_ID = "El ID de la cita no puede estar vacío.";
     private static final String ERROR_NULL_APPOINTMENT_DATA = "Los datos de la cita no pueden ser nulos.";
     private static final String ERROR_NULL_BILL = "La factura no puede ser nula.";
+    private static final String ERROR_EMPTY_BILLING_ID = "El ID de la factura no puede estar vacío.";
     private static final String ERROR_NULL_CONTACT = "El contacto de emergencia no puede ser nulo.";
 
     // --------------------- DEPENDENCIES ---------------------
@@ -68,7 +68,6 @@ public class AdministrativeUseCase {
         patientPort.updatePatient(patientId, updatedPatient);
     }
 
-    // --------------------- PATIENT QUERIES ---------------------
     public Patient searchPatient(Employee admin, String patientId) throws Exception {
         validateAdministrativeRole(admin);
         if (patientId == null || patientId.isBlank()) throw new Exception(ERROR_EMPTY_PATIENT_ID);
@@ -98,11 +97,54 @@ public class AdministrativeUseCase {
         appointmentPort.updateAppointment(appointmentId, updatedAppointment);
     }
 
+    // ✅ NUEVO: Buscar cita por ID
+    public Appointment searchAppointmentById(Employee admin, String appointmentId) throws Exception {
+        validateAdministrativeRole(admin);
+        if (appointmentId == null || appointmentId.isBlank())
+            throw new Exception(ERROR_EMPTY_APPOINTMENT_ID);
+
+        Appointment appointment = appointmentPort.searchAppointmentById(appointmentId);
+        if (appointment == null)
+            throw new Exception("No se encontró una cita con el ID: " + appointmentId);
+        return appointment;
+    }
+
+    // ✅ NUEVO: Listar todas las citas
+    public List<Appointment> listAllAppointments(Employee admin) throws Exception {
+        validateAdministrativeRole(admin);
+        return appointmentPort.listAllAppointments();
+    }
+
     // --------------------- BILLING MANAGEMENT ---------------------
     public void generateBill(Employee admin, Billing bill) throws Exception {
         validateAdministrativeRole(admin);
         if (bill == null) throw new Exception(ERROR_NULL_BILL);
         billingPort.generateBill(bill);
+    }
+
+    public void updateBilling(Employee admin, Billing updatedBilling) throws Exception {
+        validateAdministrativeRole(admin);
+        if (updatedBilling == null) throw new Exception(ERROR_NULL_BILL);
+
+        if (updatedBilling.getID() == null || updatedBilling.getID().isBlank())
+            throw new Exception(ERROR_EMPTY_BILLING_ID);
+
+        Long billingId = Long.parseLong(updatedBilling.getID());
+        billingPort.updateBill(billingId, updatedBilling);
+    }
+
+    public Billing searchBillingById(Employee admin, String billingId) throws Exception {
+        validateAdministrativeRole(admin);
+        if (billingId == null || billingId.isBlank())
+            throw new Exception(ERROR_EMPTY_BILLING_ID);
+
+        Long billingIdLong = Long.parseLong(billingId);
+        return billingPort.searchBillingById(billingIdLong);
+    }
+
+    public List<Billing> listAllBillings(Employee admin) throws Exception {
+        validateAdministrativeRole(admin);
+        return billingPort.listAllBillings();
     }
 
     // --------------------- EMERGENCY CONTACT MANAGEMENT ---------------------

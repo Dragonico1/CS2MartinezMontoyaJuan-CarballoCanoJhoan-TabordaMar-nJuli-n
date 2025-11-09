@@ -1,7 +1,7 @@
 package app.adapter.in.builder;
 
 import org.springframework.stereotype.Component;
-import app.adapter.in.rest.request.BillingRequest;
+import app.adapter.rest.request.BillingRequest; // ✅ usa el mismo DTO que el controlador
 import app.domain.model.Billing;
 import app.domain.model.Patient;
 import app.domain.model.Employee;
@@ -45,13 +45,7 @@ public class BillingBuilder {
 
         // Asignar póliza médica
         MedicalPolicy policy = new MedicalPolicy();
-        try {
-            String policyNumber = request.getPolicyNumber();
-            policy.setPolicyNumber(policyNumber);
-        } catch (NumberFormatException e) {
-            throw new Exception("El número de póliza debe ser un valor numérico.");
-        }
-
+        policy.setPolicyNumber(request.getPolicyNumber());
         billing.setPolicy(policy);
 
         return billing;

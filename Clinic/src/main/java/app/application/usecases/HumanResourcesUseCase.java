@@ -115,17 +115,19 @@ public class HumanResourcesUseCase {
      */
     
     private void validateHumanResourcesRole(String hrId) throws Exception {
-        SearchEmployeeById finder = new SearchEmployeeById(employeePort);
-        Employee employee = finder.search(hrId);
+    SearchEmployeeById finder = new SearchEmployeeById(employeePort);
+    Employee employee = finder.search(hrId);
 
-        if (employee == null) {
-            throw new Exception(ERROR_EMPLOYEE_NOT_FOUND + hrId);
-        }
-
-        if (employee.getRole() != Role.HUMAN_RESOURCES) {
-            throw new Exception(ERROR_UNAUTHORIZED_ROLE);
-        }
+    if (employee == null) {
+        throw new Exception(ERROR_EMPLOYEE_NOT_FOUND + hrId);
     }
+
+    // ✅ Permitir acceso también a ADMINISTRATIVE_STAFF
+    if (employee.getRole() != Role.HUMAN_RESOURCES) {
+        throw new Exception("Acción no autorizada: el usuario debe tener el rol de RRHH o Administrativo.");
+    }
+}
+
 
     /**
      * Validates that an object is not null.
