@@ -14,8 +14,10 @@ public class SearchEmergencyContactById {
         this.emergencyContactPort = emergencyContactPort;
     }
 
-    public EmergencyContact search(String contactId) throws Exception {
-        if (contactId == null || contactId.isEmpty()) throw new Exception("El ID del contacto no puede ser nulo");
-        return emergencyContactPort.searchEmergencyContactById(contactId);
+    public EmergencyContact search(Long contactId) throws Exception {
+    if (contactId == null) {
+        throw new Exception("El ID del contacto no puede ser nulo");
     }
+    return emergencyContactPort.searchEmergencyContactById(contactId);
+}
 }

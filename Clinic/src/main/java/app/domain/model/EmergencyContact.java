@@ -4,10 +4,11 @@ package app.domain.model;
  * @author Dragonico
  */
 public class EmergencyContact {
+    private long Id;
     private String Name;
     private String Relation;
     private String PhoneNum;
-
+    
     public String getName() {
         return Name;
     }
@@ -33,6 +34,14 @@ public class EmergencyContact {
             throw new IllegalArgumentException("Teléfono debe tener 10 dígitos");
         }
         this.PhoneNum = phoneNumber;
+    }
+
+    public long getId() {
+        return Id;
+    }
+
+    public void setId(long Id) {
+        this.Id = Id;
     }
     
 }

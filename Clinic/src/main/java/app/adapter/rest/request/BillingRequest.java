@@ -12,6 +12,8 @@ public class BillingRequest {
     private Double amount;
     private String status;
     private String patientId;
+    private String doctorId;
+    private String policyNumber;
     private String appointmentId;
 
     // ---------- Getters & Setters ----------
@@ -45,6 +47,22 @@ public class BillingRequest {
 
     public void setPatientId(String patientId) {
         this.patientId = patientId;
+    }
+
+    public String getDoctorId() {
+        return doctorId;
+    }
+
+    public void setDoctorId(String doctorId) {
+        this.doctorId = doctorId;
+    }
+
+    public String getPolicyNumber() {
+        return policyNumber;
+    }
+
+    public void setPolicyNumber(String policyNumber) {
+        this.policyNumber = policyNumber;
     }
 
     public String getAppointmentId() {

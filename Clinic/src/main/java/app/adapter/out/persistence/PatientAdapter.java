@@ -15,6 +15,9 @@ import app.infrastructure.persistence.mapper.EmergencyContactMapper;
 import app.infrastructure.persistence.mapper.MedicalPolicyMapper;
 import app.infrastructure.persistence.repository.PatientRepository;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class PatientAdapter implements PatientPort {
 
@@ -23,7 +26,8 @@ public class PatientAdapter implements PatientPort {
 
     @Override
     public void registerPatient(Patient patient) throws Exception {
-        if (patient == null) throw new Exception("El paciente no puede ser nulo");
+        if (patient == null)
+            throw new Exception("El paciente no puede ser nulo");
         patientRepository.save(PatientMapper.toEntity(patient));
     }
 
@@ -70,5 +74,16 @@ public class PatientAdapter implements PatientPort {
         MedicalPolicyEntity policyEntity = MedicalPolicyMapper.toEntity(policy);
         patient.setMedicalPolicy(policyEntity);
         patientRepository.save(patient);
+    }
+
+    @Override
+    public List<Patient> listAllPatients() throws Exception {
+        List<PatientEntity> entities = patientRepository.findAll();
+        if (entities.isEmpty()) {
+            throw new Exception("No hay pacientes registrados en el sistema.");
+        }
+        return entities.stream()
+                .map(PatientMapper::toDomain)
+                .collect(Collectors.toList());
     }
 }

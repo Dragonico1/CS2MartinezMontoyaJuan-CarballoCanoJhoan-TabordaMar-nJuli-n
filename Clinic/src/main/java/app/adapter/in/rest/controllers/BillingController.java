@@ -1,7 +1,8 @@
 package app.adapter.in.rest.controllers;
 
-import app.adapter.in.builder.BillingBuilder;
-import app.adapter.in.rest.request.BillingRequest;
+import app.adapter.rest.mapper.BillingRestMapper;
+import app.adapter.rest.request.BillingRequest;
+import app.adapter.rest.response.BillingResponse;
 import app.application.usecases.AdministrativeUseCase;
 import app.domain.model.Billing;
 import app.domain.model.Employee;
@@ -21,32 +22,39 @@ import org.springframework.web.bind.annotation.*;
 public class BillingController {
 
     @Autowired
-    private BillingBuilder billingBuilder;
-
-    @Autowired
     private AdministrativeUseCase administrativeUseCase;
 
-    /**
-     * Endpoint to generate a new billing record.
-     */
+    @Autowired
+    private BillingRestMapper billingRestMapper;
+
+    // ---------------------- POST (Crear factura) ----------------------
     @PostMapping
     public ResponseEntity<?> generateBilling(
             @RequestBody BillingRequest request,
             @RequestHeader("employeeId") String employeeId) {
         try {
-            Billing billing = billingBuilder.build(request);
+            // Convertimos el request REST a modelo de dominio
+            Billing billing = billingRestMapper.toDomain(request);
 
             Employee admin = new Employee();
             admin.setId(employeeId);
 
             administrativeUseCase.generateBill(admin, billing);
 
+            BillingResponse response = billingRestMapper.toResponse(billing);
+
             return ResponseEntity.status(HttpStatus.CREATED)
-                    .body("Factura generada correctamente.");
+                    .body(response);
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Error al generar la factura: " + e.getMessage());
+                    .body("❌ Error al generar la factura: " + e.getMessage());
         }
+    }
+
+    // ---------------------- (Opcional) GET para probar ----------------------
+    @GetMapping("/ping")
+    public String testEndpoint() {
+        return "✅ BillingController funcionando correctamente.";
     }
 }

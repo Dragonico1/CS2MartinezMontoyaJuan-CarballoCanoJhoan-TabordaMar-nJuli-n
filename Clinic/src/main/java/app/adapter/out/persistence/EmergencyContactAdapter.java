@@ -24,9 +24,11 @@ public class EmergencyContactAdapter implements EmergencyContactPort {
     }
 
     @Override
-    public void updateEmergencyContact(String contactId, EmergencyContact updatedData) throws Exception {
-        EmergencyContactEntity existing = emergencyContactRepository.findById(contactId)
-                .orElseThrow(() -> new Exception("No se encontró el contacto de emergencia con ID: " + contactId));
+    public void updateEmergencyContact(long contactId, EmergencyContact updatedData) throws Exception {
+        String id = String.valueOf(contactId); // 🔁 conversión de long → String
+
+        EmergencyContactEntity existing = emergencyContactRepository.findById(id)
+                .orElseThrow(() -> new Exception("No se encontró el contacto de emergencia con ID: " + id));
 
         EmergencyContactEntity updated = EmergencyContactMapper.toEntity(updatedData);
         updated.setContactId(existing.getContactId());
@@ -39,12 +41,15 @@ public class EmergencyContactAdapter implements EmergencyContactPort {
             throw new Exception("No se puede eliminar: contacto de emergencia no encontrado con ID: " + contactId);
         }
         emergencyContactRepository.deleteById(contactId);
-    }
+}
 
     @Override
-    public EmergencyContact searchEmergencyContactById(String contactId) throws Exception {
-        EmergencyContactEntity entity = emergencyContactRepository.findById(contactId)
-                .orElseThrow(() -> new Exception("No se encontró el contacto de emergencia con ID: " + contactId));
+    public EmergencyContact searchEmergencyContactById(long contactId) throws Exception {
+        String id = String.valueOf(contactId); // 🔁 conversión de long → String
+
+        EmergencyContactEntity entity = emergencyContactRepository.findById(id)
+                .orElseThrow(() -> new Exception("No se encontró el contacto de emergencia con ID: " + id));
+
         return EmergencyContactMapper.toDomain(entity);
     }
 

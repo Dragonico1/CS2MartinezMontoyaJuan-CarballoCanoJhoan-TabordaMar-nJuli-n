@@ -5,6 +5,7 @@ import app.domain.model.Emuns.Role;
 import app.domain.ports.*;
 import app.adapter.in.validators.AppointmentValidator;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 /**
  * Main use case class for the Administrative Staff (AdminStaff) role.
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AdministrativeUseCase {
 
-    // --------------------- CONSTANT MESSAGES (in Spanish for user feedback) ---------------------
+    // --------------------- CONSTANT MESSAGES ---------------------
     private static final String ERROR_UNAUTHORIZED = "Acceso denegado: el empleado no tiene rol administrativo.";
     private static final String ERROR_NULL_PATIENT = "El paciente no puede ser nulo.";
     private static final String ERROR_EMPTY_PATIENT_ID = "El ID del paciente no puede estar vacío.";
@@ -47,12 +48,6 @@ public class AdministrativeUseCase {
     }
 
     // --------------------- ROLE VALIDATION ---------------------
-    /**
-     * Validates that the user has an administrative role before performing any operation.
-     * 
-     * @param employee The employee attempting the action.
-     * @throws Exception if the employee is null or does not have the AdminStaff role.
-     */
     private void validateAdministrativeRole(Employee employee) throws Exception {
         if (employee == null || employee.getRole() != Role.ADMIN_STAFF) {
             throw new Exception(ERROR_UNAUTHORIZED);
@@ -60,122 +55,76 @@ public class AdministrativeUseCase {
     }
 
     // --------------------- PATIENT MANAGEMENT ---------------------
-
-    /**
-     * Registers a new patient in the system.
-     * 
-     * @param admin The administrative employee performing the action.
-     * @param patient The patient to be registered.
-     * @throws Exception if validation fails.
-     */
     public void registerPatient(Employee admin, Patient patient) throws Exception {
         validateAdministrativeRole(admin);
-
-        if (patient == null) {
-            throw new Exception(ERROR_NULL_PATIENT);
-        }
-
+        if (patient == null) throw new Exception(ERROR_NULL_PATIENT);
         patientPort.registerPatient(patient);
     }
 
-    /**
-     * Updates patient information.
-     * 
-     * @param admin The administrative employee performing the action.
-     * @param patientId The patient ID to update.
-     * @param updatedPatient The new patient data.
-     * @throws Exception if validation fails.
-     */
     public void updatePatient(Employee admin, String patientId, Patient updatedPatient) throws Exception {
         validateAdministrativeRole(admin);
-
-        if (patientId == null || patientId.isBlank()) {
-            throw new Exception(ERROR_EMPTY_PATIENT_ID);
-        }
-        if (updatedPatient == null) {
-            throw new Exception(ERROR_NULL_PATIENT_DATA);
-        }
-
+        if (patientId == null || patientId.isBlank()) throw new Exception(ERROR_EMPTY_PATIENT_ID);
+        if (updatedPatient == null) throw new Exception(ERROR_NULL_PATIENT_DATA);
         patientPort.updatePatient(patientId, updatedPatient);
     }
 
-    // --------------------- APPOINTMENT MANAGEMENT ---------------------
+    // --------------------- PATIENT QUERIES ---------------------
+    public Patient searchPatient(Employee admin, String patientId) throws Exception {
+        validateAdministrativeRole(admin);
+        if (patientId == null || patientId.isBlank()) throw new Exception(ERROR_EMPTY_PATIENT_ID);
+        Patient patient = patientPort.searchPatientById(patientId);
+        if (patient == null) throw new Exception("No se encontró un paciente con el ID: " + patientId);
+        return patient;
+    }
 
-    /**
-     * Creates a new appointment in the system.
-     * 
-     * @param admin The administrative employee performing the action.
-     * @param appointment The appointment object to create.
-     * @throws Exception if validation fails or the appointment data is invalid.
-     */
+    public List<Patient> listAllPatients(Employee admin) throws Exception {
+        validateAdministrativeRole(admin);
+        return patientPort.listAllPatients();
+    }
+
+    // --------------------- APPOINTMENT MANAGEMENT ---------------------
     public void createAppointment(Employee admin, Appointment appointment) throws Exception {
         validateAdministrativeRole(admin);
-
-        if (appointment == null) {
-            throw new Exception(ERROR_NULL_APPOINTMENT);
-        }
-
+        if (appointment == null) throw new Exception(ERROR_NULL_APPOINTMENT);
         appointmentValidator.validate(appointment);
         appointmentPort.scheduleAppointment(appointment);
     }
 
-    /**
-     * Updates an existing appointment.
-     * 
-     * @param admin The administrative employee performing the action.
-     * @param appointmentId The ID of the appointment to update.
-     * @param updatedAppointment The updated appointment data.
-     * @throws Exception if validation fails.
-     */
     public void updateAppointment(Employee admin, String appointmentId, Appointment updatedAppointment) throws Exception {
         validateAdministrativeRole(admin);
-
-        if (appointmentId == null || appointmentId.isBlank()) {
-            throw new Exception(ERROR_EMPTY_APPOINTMENT_ID);
-        }
-        if (updatedAppointment == null) {
-            throw new Exception(ERROR_NULL_APPOINTMENT_DATA);
-        }
-
+        if (appointmentId == null || appointmentId.isBlank()) throw new Exception(ERROR_EMPTY_APPOINTMENT_ID);
+        if (updatedAppointment == null) throw new Exception(ERROR_NULL_APPOINTMENT_DATA);
         appointmentValidator.validate(updatedAppointment);
         appointmentPort.updateAppointment(appointmentId, updatedAppointment);
     }
 
     // --------------------- BILLING MANAGEMENT ---------------------
-
-    /**
-     * Generates a new billing record for a patient.
-     * 
-     * @param admin The administrative employee performing the action.
-     * @param bill The billing object to generate.
-     * @throws Exception if validation fails.
-     */
     public void generateBill(Employee admin, Billing bill) throws Exception {
         validateAdministrativeRole(admin);
-
-        if (bill == null) {
-            throw new Exception(ERROR_NULL_BILL);
-        }
-
+        if (bill == null) throw new Exception(ERROR_NULL_BILL);
         billingPort.generateBill(bill);
     }
 
     // --------------------- EMERGENCY CONTACT MANAGEMENT ---------------------
-
-    /**
-     * Registers a new emergency contact.
-     * 
-     * @param admin The administrative employee performing the action.
-     * @param contact The emergency contact to register.
-     * @throws Exception if validation fails.
-     */
     public void registerEmergencyContact(Employee admin, EmergencyContact contact) throws Exception {
         validateAdministrativeRole(admin);
-
-        if (contact == null) {
-            throw new Exception(ERROR_NULL_CONTACT);
-        }
-
+        if (contact == null) throw new Exception(ERROR_NULL_CONTACT);
         contactPort.registerEmergencyContact(contact);
+    }
+
+    public void updateEmergencyContact(Employee admin, EmergencyContact contact) throws Exception {
+        validateAdministrativeRole(admin);
+        if (contact == null) throw new Exception(ERROR_NULL_CONTACT);
+        contactPort.updateEmergencyContact(contact.getId(), contact);
+    }
+
+    public EmergencyContact searchEmergencyContactById(Employee admin, Long contactId) throws Exception {
+        validateAdministrativeRole(admin);
+        return contactPort.searchEmergencyContactById(contactId);
+    }
+
+    public List<EmergencyContact> listAllEmergencyContacts(Employee admin) throws Exception {
+        validateAdministrativeRole(admin);
+        return contactPort.listAllEmergencyContacts();
     }
 }
